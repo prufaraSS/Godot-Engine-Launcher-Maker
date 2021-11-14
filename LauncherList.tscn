@@ -1,0 +1,324 @@
+[gd_scene load_steps=7 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends PanelContainer
+tool
+
+const CLASSCODE = 1
+
+export var items :PoolStringArray setget set_items
+export var selected_items :PoolStringArray setget set_selitems
+onready var button_placeholder = $Button
+export var text := \"\" setget set_text
+var importeditems := [] setget set_importeditems
+
+onready var LIST := $VBoxContainer/HBoxContainer/ScrollContainer/VBoxContainer
+onready var LIST_SELECTED := $VBoxContainer/HBoxContainer/ScrollContainer2/VBoxContainer
+const TITLE_NAME := NodePath(\"VBoxContainer/Label\")
+
+#---
+signal _ready
+var _ready = false
+#---
+
+func add_to_list(l,itemlist):
+	for i in l.get_children():
+		i.queue_free()
+	for i in itemlist:
+		var clone = button_placeholder.duplicate()
+		clone.text = i
+		clone.connect(\"pressed\",self,\"release_expect\",[i])
+		clone.visible = true
+		l.add_child(clone)
+
+func set_items(itemlist:PoolStringArray):
+	if _ready == false:
+		yield(self,\"_ready\")
+	items = itemlist
+	add_to_list(LIST,itemlist)
+
+func set_selitems(itemlist:PoolStringArray):
+	if _ready == false:
+		yield(self,\"_ready\")
+	selected_items = itemlist
+	add_to_list(LIST_SELECTED,itemlist)
+
+func _notification(what):
+	if what == NOTIFICATION_ENTER_TREE and Engine.editor_hint:
+		yield(get_tree(),\"idle_frame\")
+		yield(get_tree(),\"idle_frame\")
+	if what == NOTIFICATION_READY or what == NOTIFICATION_ENTER_TREE and Engine.editor_hint:
+		_ready = true
+		emit_signal(\"_ready\")
+
+func set_text(t:String):
+	if _ready == false:
+		yield(self,\"_ready\")
+	text = t
+	get_node(TITLE_NAME).text = t
+
+func save():
+	var arr := LIST.get_children()
+	arr.append_array(LIST_SELECTED.get_children())
+	var result := []
+	for i in arr:
+		if i is Button and i.get_node(\"../../\").name == LIST_SELECTED.get_parent().name:
+			result.append(i.text)
+	get_tree().current_scene.changedSetting(text,result)
+
+func set_importeditems(impitems:Array):
+	yield(get_tree(),\"idle_frame\")
+	yield(get_tree(),\"idle_frame\")
+	importeditems = impitems
+	var arr := LIST.get_children()
+	arr.append_array(LIST_SELECTED.get_children())
+	for item in arr:
+		var found := false
+		for loadeditem in impitems:
+			if loadeditem == item.text:
+				found = true
+				if item.get_node(\"../../\").name == LIST.get_parent().name:
+					LIST.remove_child(item)
+					LIST_SELECTED.add_child(item) 
+		if found == false:
+			if item.get_node(\"../../\").name == LIST_SELECTED.get_parent().name:
+				LIST_SELECTED.remove_child(item)
+				LIST.add_child(item)
+				
+
+func release_expect(buttontext:String):
+	var array :Array= LIST.get_children()
+	array.append_array(LIST_SELECTED.get_children())
+	for i in array:
+		if i.pressed == true and i.text != buttontext:
+			i.pressed = false
+"
+
+[sub_resource type="StyleBoxFlat" id=2]
+content_margin_left = 5.0
+content_margin_right = 5.0
+content_margin_top = 5.0
+content_margin_bottom = 5.0
+bg_color = Color( 0.2, 0.2, 0.2, 1 )
+
+[sub_resource type="GDScript" id=3]
+script/source = "extends Button
+
+var root
+var LIST
+var LIST_EN
+
+func _pressed():
+	root = $\"../../../\"
+	LIST = root.LIST
+	LIST_EN = root.LIST_SELECTED
+	var arr :Array= LIST.get_children()
+	arr.append_array(LIST_EN.get_children())
+	for i in arr:
+		if i is Button and i.pressed == true:
+			i.pressed = false
+			if i.get_node(\"../../\").name == LIST.get_parent().name:
+				LIST.remove_child(i)
+				LIST_EN.add_child(i)
+			else:
+				LIST_EN.remove_child(i)
+				LIST.add_child(i)
+	root.save()
+"
+
+[sub_resource type="GDScript" id=5]
+script/source = "extends Button
+
+var root
+var LIST
+var LIST_EN
+
+func _pressed():
+	root = $\"../../../\"
+	LIST = root.LIST
+	LIST_EN = root.LIST_SELECTED
+	var arr :Array= LIST.get_children()
+	arr.append_array(LIST_EN.get_children())
+	for i in arr:
+		if i is Button:
+			if i.get_node(\"../../\").name == LIST.get_parent().name:
+				LIST.remove_child(i)
+				LIST_EN.add_child(i)
+			else:
+				LIST_EN.remove_child(i)
+				LIST.add_child(i)
+	root.save()
+"
+
+[sub_resource type="GDScript" id=6]
+script/source = "extends Button
+
+var root
+var LIST
+var LIST_EN
+
+func _pressed():
+	root = $\"../../../\"
+	LIST = root.LIST
+	LIST_EN = root.LIST_SELECTED
+	var arr :Array= LIST.get_children()
+	arr.append_array(LIST_EN.get_children())
+	for i in arr:
+		if i is Button:
+			if i.get_node(\"../../\").name == LIST.get_parent().name:
+				LIST.remove_child(i)
+				LIST_EN.add_child(i)
+	root.save()
+"
+
+[sub_resource type="GDScript" id=7]
+script/source = "extends Button
+
+var root
+var LIST
+var LIST_EN
+
+func _pressed():
+	root = $\"../../../\"
+	LIST = root.LIST
+	LIST_EN = root.LIST_SELECTED
+	var arr :Array= LIST.get_children()
+	arr.append_array(LIST_EN.get_children())
+	for i in arr:
+		if i is Button:
+			if i.get_node(\"../../\").name == LIST_EN.get_parent().name:
+				LIST_EN.remove_child(i)
+				LIST.add_child(i)
+	root.save()
+"
+
+[node name="PanelContainer" type="PanelContainer"]
+margin_right = 281.0
+margin_bottom = 281.0
+rect_min_size = Vector2( 321, 321 )
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="."]
+visible = false
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 274.0
+margin_bottom = 274.0
+toggle_mode = true
+text = "button 1"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 314.0
+margin_bottom = 314.0
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+margin_right = 307.0
+margin_bottom = 14.0
+size_flags_vertical = 0
+text = "List name"
+align = 1
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 18.0
+margin_right = 307.0
+margin_bottom = 32.0
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer3"]
+margin_right = 151.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "Not active"
+align = 1
+
+[node name="Label2" type="Label" parent="VBoxContainer/HBoxContainer3"]
+margin_left = 155.0
+margin_right = 307.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "Active"
+align = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 36.0
+margin_right = 307.0
+margin_bottom = 283.0
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/HBoxContainer"]
+margin_right = 151.0
+margin_bottom = 247.0
+size_flags_horizontal = 3
+custom_styles/bg = SubResource( 2 )
+scroll_horizontal_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/ScrollContainer"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 146.0
+margin_bottom = 5.0
+size_flags_horizontal = 3
+
+[node name="ScrollContainer2" type="ScrollContainer" parent="VBoxContainer/HBoxContainer"]
+margin_left = 155.0
+margin_right = 307.0
+margin_bottom = 247.0
+size_flags_horizontal = 3
+custom_styles/bg = SubResource( 2 )
+scroll_horizontal_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/ScrollContainer2"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 147.0
+margin_bottom = 5.0
+size_flags_horizontal = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 287.0
+margin_right = 307.0
+margin_bottom = 307.0
+size_flags_horizontal = 3
+custom_constants/separation = 10
+
+[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer2"]
+margin_right = 36.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 36, 0 )
+size_flags_horizontal = 2
+text = ">|<"
+script = SubResource( 3 )
+
+[node name="Button2" type="Button" parent="VBoxContainer/HBoxContainer2"]
+margin_left = 46.0
+margin_right = 109.0
+margin_bottom = 20.0
+size_flags_horizontal = 11
+text = "swap all"
+script = SubResource( 5 )
+
+[node name="Button3" type="Button" parent="VBoxContainer/HBoxContainer2"]
+margin_left = 119.0
+margin_right = 200.0
+margin_bottom = 20.0
+size_flags_horizontal = 11
+text = "activate all"
+script = SubResource( 6 )
+
+[node name="Button4" type="Button" parent="VBoxContainer/HBoxContainer2"]
+margin_left = 210.0
+margin_right = 307.0
+margin_bottom = 20.0
+size_flags_horizontal = 11
+text = "deactivate all"
+script = SubResource( 7 )

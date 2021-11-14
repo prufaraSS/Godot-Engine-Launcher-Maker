@@ -1,0 +1,98 @@
+[gd_scene load_steps=4 format=2]
+
+[sub_resource type="GDScript" id=4]
+script/source = "extends WindowDialog
+
+var autoquit := false
+
+func _notification(what):
+	if what == NOTIFICATION_WM_QUIT_REQUEST:
+		if autoquit == true:
+			get_tree().current_scene.saveSettings()
+			yield(get_tree(),\"idle_frame\")
+			yield(get_tree(),\"idle_frame\")
+			get_tree().quit()
+		else:
+			call_deferred(\"popup_centered\")
+"
+
+[sub_resource type="GDScript" id=5]
+script/source = "extends Button
+
+func _pressed():
+	get_tree().current_scene.saveSettings()
+	disabled = true
+	yield(get_tree(),\"idle_frame\")
+	yield(get_tree(),\"idle_frame\")
+	get_tree().quit()
+"
+
+[sub_resource type="GDScript" id=3]
+script/source = "extends Button
+
+func _pressed():
+	get_tree().quit()
+"
+
+[node name="QuitDialog" type="WindowDialog"]
+margin_right = 287.0
+margin_bottom = 130.0
+popup_exclusive = true
+window_title = "Quit"
+script = SubResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = -40.0
+text = "Do you want to save settings before quit?"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = -40.0
+margin_right = -10.0
+custom_constants/separation = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="HBoxContainer"]
+margin_top = 10.0
+margin_right = 82.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+text = "Save&Quit"
+script = SubResource( 5 )
+
+[node name="Button2" type="Button" parent="HBoxContainer"]
+margin_left = 92.0
+margin_top = 10.0
+margin_right = 174.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+text = "Quit"
+script = SubResource( 3 )
+
+[node name="Button3" type="Button" parent="HBoxContainer"]
+margin_left = 184.0
+margin_top = 10.0
+margin_right = 267.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+text = "Cancel"
+
+[connection signal="pressed" from="HBoxContainer/Button3" to="." method="set_visible" binds= [ false ]]

@@ -1,0 +1,59 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Control
+
+const CLASSCODE := 0
+
+onready var text :String = $GridContainer/Label.text
+var value = 0 setget set_value
+
+func value_ch(v):
+	get_tree().current_scene.changedSetting(text,v)
+
+func _ready():
+	text = $GridContainer/Label.text
+	var slider = $GridContainer/SpinBox
+	slider.connect(\"value_changed\",self,\"value_ch\")
+
+func set_text(t:String):
+	$GridContainer/Label.text = t
+	text = t
+
+func set_value(v):
+	value = v
+	$GridContainer/SpinBox.value = v
+"
+
+[node name="LauncherHSlider" type="Control"]
+margin_right = 200.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 200, 24 )
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GridContainer" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="GridContainer"]
+margin_right = 116.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+size_flags_stretch_ratio = 2.0
+align = 2
+valign = 1
+
+[node name="SpinBox" type="SpinBox" parent="GridContainer"]
+margin_left = 120.0
+margin_right = 200.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 80, 0 )
+size_flags_horizontal = 9
+size_flags_vertical = 7
