@@ -22,6 +22,7 @@ Release v1.0 on Godot Engine v3.4.stable.official
 - [ ] ColorPicker Button
 
 ## v1.1 to-do list:
-- [ ] Get rid of old SpinBox and HSlider class
-- [ ] Make project more presentable
-- [ ] Make better example with applied settings showcase
+- [x] Get rid of old SpinBox and HSlider class
+- [x] Make project more presentable
+- [x] Make better example with applied settings showcase
+- v1.1 release soon!
