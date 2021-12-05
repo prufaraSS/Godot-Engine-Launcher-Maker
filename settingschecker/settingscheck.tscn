@@ -1,0 +1,50 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Control
+
+func _ready():
+	var l :Label = $VBoxContainer/Label2
+	var f := File.new()
+	if f.file_exists(\"res://settings.json\"):
+		f.open(\"res://settings.json\",File.READ)
+		var res := \"\"
+		var json := JSON.parse(f.get_as_text())
+		if json.error == OK:
+			var json_res :Dictionary = json.result
+			for i in json_res.keys():
+				res += i + \": \" + str(json_res.get(i)) + \"\\n\"
+		else:
+			res == json.error_text
+		l.text = res
+	else:
+		l.text = \"No settings found\"
+"
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 5.0
+margin_top = 5.0
+margin_right = -5.0
+margin_bottom = -5.0
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+custom_constants/separation = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+margin_right = 124.0
+margin_bottom = 14.0
+text = "Checking settings..."
+
+[node name="Label2" type="Label" parent="VBoxContainer"]
+margin_top = 24.0
+margin_right = 124.0
+margin_bottom = 38.0

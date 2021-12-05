@@ -23,6 +23,9 @@ func set_timer(param):
 					i.stop()
 					i.queue_free()
 
+func _ready():
+	buttontext = text
+
 func timeout():
 	text = buttontext + " (" + str(time) + ")"
 	time -= 1

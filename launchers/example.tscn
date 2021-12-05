@@ -1,12 +1,13 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://laucherRoot.gd" type="Script" id=1]
 [ext_resource path="res://launchButton.gd" type="Script" id=2]
-[ext_resource path="res://LauncherHSlider2.tscn" type="PackedScene" id=3]
+[ext_resource path="res://LauncherHSlider.tscn" type="PackedScene" id=3]
 [ext_resource path="res://launcherCheckBox.gd" type="Script" id=4]
 [ext_resource path="res://saveButton.gd" type="Script" id=5]
 [ext_resource path="res://LauncherList.tscn" type="PackedScene" id=6]
-[ext_resource path="res://LauncherSpinBox2.tscn" type="PackedScene" id=7]
+[ext_resource path="res://LauncherSpinBox.tscn" type="PackedScene" id=7]
+[ext_resource path="res://errortracer.tscn" type="PackedScene" id=8]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends CheckBox
@@ -77,26 +78,32 @@ __meta__ = {
 
 [node name="Label" type="Label" parent="Title"]
 margin_top = 5.0
-margin_right = 207.0
+margin_right = 155.0
 margin_bottom = 19.0
-text = "Windows XP Calculator Launcher"
+text = "Check Settings Launcher"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="CheckBox" type="CheckBox" parent="Title"]
-margin_left = 227.0
-margin_right = 450.0
+margin_left = 175.0
+margin_right = 484.0
 margin_bottom = 24.0
-text = "Autostart Calculator on startup"
+text = "Autostart on startup (uncheck to stop timer)"
 script = SubResource( 1 )
 
 [node name="CheckBox2" type="CheckBox" parent="Title"]
-margin_left = 470.0
-margin_right = 729.0
+margin_left = 504.0
+margin_right = 763.0
 margin_bottom = 24.0
 text = "Auto select Save&Quit in Exit popup"
 script = SubResource( 2 )
+
+[node name="Button2" parent="Title" instance=ExtResource( 8 )]
+margin_left = 783.0
+margin_right = 807.0
+margin_bottom = 24.0
+popup_valign = 2
 
 [node name="Button" type="Button" parent="Title"]
 margin_left = 892.0
@@ -188,7 +195,7 @@ margin_right = 252.0
 margin_bottom = 50.0
 rect_min_size = Vector2( 0, 50 )
 size_flags_horizontal = 3
-text = "Launch Calculator"
+text = "Launch Settings"
 script = ExtResource( 2 )
 
 [node name="RightGrid" type="VBoxContainer" parent="Container"]
@@ -213,7 +220,7 @@ margin_bottom = 48.0
 size_flags_horizontal = 8
 size_flags_vertical = 0
 size_flags_stretch_ratio = 0.0
-text = "Some spin box"
+text = "SpinBox"
 
 [node name="LauncherHSlider" parent="Container/RightGrid" instance=ExtResource( 3 )]
 margin_left = 657.0
@@ -221,10 +228,10 @@ margin_top = 58.0
 margin_right = 757.0
 margin_bottom = 74.0
 size_flags_horizontal = 8
-text = "This is a horizontal slider"
+text = "HSlider"
 
 [node name="LauncherCheckBox" type="CheckBox" parent="Container/RightGrid"]
-margin_left = 591.0
+margin_left = 667.0
 margin_top = 84.0
 margin_right = 757.0
 margin_bottom = 108.0
@@ -232,10 +239,10 @@ size_flags_horizontal = 8
 size_flags_vertical = 0
 size_flags_stretch_ratio = 0.0
 custom_constants/check_vadjust = 0
-text = "Check me if you dare!"
+text = "CheckBox"
 script = ExtResource( 4 )
 
-[node name="PanelContainer" parent="Container/RightGrid" instance=ExtResource( 6 )]
+[node name="LauncherList" parent="Container/RightGrid" instance=ExtResource( 6 )]
 margin_left = 357.0
 margin_top = 118.0
 margin_right = 757.0
@@ -244,9 +251,9 @@ rect_min_size = Vector2( 400, 281 )
 size_flags_horizontal = 8
 size_flags_vertical = 0
 size_flags_stretch_ratio = 0.0
-items = PoolStringArray( "Multiply", "Divide" )
-selected_items = PoolStringArray( "Add", "Substract" )
-text = "Allowable Mathematical Calculations"
+items = PoolStringArray( "First NonActive", "Second NonActive", "Third NonActive" )
+selected_items = PoolStringArray( "First Active", "Second Active", "Third Active" )
+text = "List"
 
 [node name="saveButton" type="Button" parent="Container/RightGrid"]
 margin_left = 607.0

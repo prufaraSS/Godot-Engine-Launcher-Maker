@@ -1,59 +1,49 @@
 [gd_scene load_steps=2 format=2]
 
 [sub_resource type="GDScript" id=1]
-script/source = "extends Control
+script/source = "extends SpinBox
+tool
 
-const CLASSCODE := 0
+export var text := \"\" setget set_text
 
-onready var text :String = $GridContainer/Label.text
-var value = 0 setget set_value
+signal _ready
+var _ready := false
 
-func value_ch(v):
-	get_tree().current_scene.changedSetting(text,v)
+func _notification(what):
+	if what == NOTIFICATION_ENTER_TREE and Engine.editor_hint:
+		yield(get_tree(),\"idle_frame\")
+		yield(get_tree(),\"idle_frame\")
+	if what == NOTIFICATION_READY or what == NOTIFICATION_ENTER_TREE and Engine.editor_hint:
+		_ready = true
+		emit_signal(\"_ready\")
 
-func _ready():
-	text = $GridContainer/Label.text
-	var slider = $GridContainer/SpinBox
-	slider.connect(\"value_changed\",self,\"value_ch\")
+func save(_v):
+	get_tree().current_scene.changedSetting(text,value)
 
 func set_text(t:String):
-	$GridContainer/Label.text = t
+	if _ready == false:
+		yield(self,\"_ready\")
 	text = t
-
-func set_value(v):
-	value = v
-	$GridContainer/SpinBox.value = v
+	$Label.text = t
 "
 
-[node name="LauncherHSlider" type="Control"]
-margin_right = 200.0
-margin_bottom = 16.0
-rect_min_size = Vector2( 200, 24 )
+[node name="LauncherSpinBox" type="SpinBox"]
+margin_right = 74.0
+margin_bottom = 24.0
 script = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="GridContainer" type="HBoxContainer" parent="."]
-anchor_right = 1.0
+[node name="Label" type="Label" parent="."]
 anchor_bottom = 1.0
+margin_left = -5.0
+margin_right = -5.0
+grow_horizontal = 0
+align = 2
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="GridContainer"]
-margin_right = 116.0
-margin_bottom = 24.0
-size_flags_horizontal = 3
-size_flags_vertical = 7
-size_flags_stretch_ratio = 2.0
-align = 2
-valign = 1
-
-[node name="SpinBox" type="SpinBox" parent="GridContainer"]
-margin_left = 120.0
-margin_right = 200.0
-margin_bottom = 24.0
-rect_min_size = Vector2( 80, 0 )
-size_flags_horizontal = 9
-size_flags_vertical = 7
+[connection signal="value_changed" from="." to="." method="save"]

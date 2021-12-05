@@ -5,6 +5,10 @@ script/source = "extends WindowDialog
 
 var autoquit := false
 
+func _ready():
+	get_tree().set_auto_accept_quit(false)
+	get_tree().set_quit_on_go_back(false)
+
 func _notification(what):
 	if what == NOTIFICATION_WM_QUIT_REQUEST:
 		if autoquit == true:
