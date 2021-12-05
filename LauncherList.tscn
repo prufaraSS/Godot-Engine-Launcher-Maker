@@ -1,4 +1,6 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://math_unicode.tres" type="DynamicFont" id=1]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends PanelContainer
@@ -192,7 +194,7 @@ func _pressed():
 	root.save()
 "
 
-[node name="PanelContainer" type="PanelContainer"]
+[node name="LauncherList" type="PanelContainer"]
 margin_right = 281.0
 margin_bottom = 281.0
 rect_min_size = Vector2( 321, 321 )
@@ -246,12 +248,12 @@ align = 1
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 36.0
 margin_right = 307.0
-margin_bottom = 283.0
+margin_bottom = 281.0
 size_flags_vertical = 3
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/HBoxContainer"]
 margin_right = 151.0
-margin_bottom = 247.0
+margin_bottom = 245.0
 size_flags_horizontal = 3
 custom_styles/bg = SubResource( 2 )
 scroll_horizontal_enabled = false
@@ -269,7 +271,7 @@ size_flags_horizontal = 3
 [node name="ScrollContainer2" type="ScrollContainer" parent="VBoxContainer/HBoxContainer"]
 margin_left = 155.0
 margin_right = 307.0
-margin_bottom = 247.0
+margin_bottom = 245.0
 size_flags_horizontal = 3
 custom_styles/bg = SubResource( 2 )
 scroll_horizontal_enabled = false
@@ -285,7 +287,7 @@ margin_bottom = 5.0
 size_flags_horizontal = 3
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 287.0
+margin_top = 285.0
 margin_right = 307.0
 margin_bottom = 307.0
 size_flags_horizontal = 3
@@ -293,32 +295,36 @@ custom_constants/separation = 10
 
 [node name="Button" type="Button" parent="VBoxContainer/HBoxContainer2"]
 margin_right = 36.0
-margin_bottom = 20.0
+margin_bottom = 22.0
 rect_min_size = Vector2( 36, 0 )
 size_flags_horizontal = 2
-text = ">|<"
+custom_fonts/font = ExtResource( 1 )
+text = "⇥⇤"
 script = SubResource( 3 )
 
 [node name="Button2" type="Button" parent="VBoxContainer/HBoxContainer2"]
-margin_left = 46.0
-margin_right = 109.0
-margin_bottom = 20.0
-size_flags_horizontal = 11
-text = "swap all"
+margin_left = 215.0
+margin_right = 239.0
+margin_bottom = 22.0
+size_flags_horizontal = 9
+custom_fonts/font = ExtResource( 1 )
+text = "↹"
 script = SubResource( 5 )
 
 [node name="Button3" type="Button" parent="VBoxContainer/HBoxContainer2"]
-margin_left = 119.0
-margin_right = 200.0
-margin_bottom = 20.0
-size_flags_horizontal = 11
-text = "activate all"
+margin_left = 249.0
+margin_right = 273.0
+margin_bottom = 22.0
+size_flags_horizontal = 9
+custom_fonts/font = ExtResource( 1 )
+text = "⇉"
 script = SubResource( 6 )
 
 [node name="Button4" type="Button" parent="VBoxContainer/HBoxContainer2"]
-margin_left = 210.0
+margin_left = 283.0
 margin_right = 307.0
-margin_bottom = 20.0
-size_flags_horizontal = 11
-text = "deactivate all"
+margin_bottom = 22.0
+size_flags_horizontal = 9
+custom_fonts/font = ExtResource( 1 )
+text = "⇇"
 script = SubResource( 7 )
