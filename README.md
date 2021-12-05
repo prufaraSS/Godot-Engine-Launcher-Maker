@@ -1,6 +1,6 @@
 # Godot Engine Launcher Maker
 Makes much easier and faster to create launcher for anything you need. All settings saved in 'settings.json'
-Release v1.0 on Godot Engine v3.4.stable.official
+Release v1.1 on Godot Engine v3.4.stable.official [206ba70f4]
 
 ## How to use?:
 1. Download and import project in Godot Engine
@@ -20,9 +20,3 @@ Release v1.0 on Godot Engine v3.4.stable.official
 - [ ] Option Button
 - [ ] Menu Button
 - [ ] ColorPicker Button
-
-## v1.1 to-do list:
-- [x] Get rid of old SpinBox and HSlider class
-- [x] Make project more presentable
-- [x] Make better example with applied settings showcase
-- v1.1 release soon!
