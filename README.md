@@ -12,11 +12,13 @@ Release v1.1 on Godot Engine v3.4.stable.official [206ba70f4]
 - [x] HorizontalSlider
 - [x] List (Custom class)
 - [x] CheckBox
-- [x] Launch-app button
-- [x] Confirm-to-quit popup
-- [x] Save config button
 - [ ] LineEdit
 - [ ] TextEdit
 - [ ] Option Button
 - [ ] Menu Button
 - [ ] ColorPicker Button
+
+## Unique classes:
+- Launch-app button
+- Confirm-to-quit popup
+- Save config button
