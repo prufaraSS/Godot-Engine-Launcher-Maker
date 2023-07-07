@@ -1,0 +1,60 @@
+[gd_scene load_steps=2 format=3 uid="uid://ccvy73qpxwan3"]
+
+[sub_resource type="GDScript" id="GDScript_40nli"]
+resource_name = "main"
+script/source = "extends Window
+
+func save():
+	get_tree().current_scene.save()
+
+func quit():
+	get_tree().quit()
+
+"
+
+[node name="Popup" type="Window"]
+title = "Warning"
+size = Vector2i(275, 100)
+visible = false
+script = SubResource("GDScript_40nli")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+text = "Do you want to save changes?"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_constants/separation = 10
+
+[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(75, 0)
+layout_mode = 2
+text = "Yes"
+
+[node name="Button2" type="Button" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(75, 0)
+layout_mode = 2
+text = "No"
+
+[node name="Button3" type="Button" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(75, 0)
+layout_mode = 2
+text = "Cancel"
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Button" to="." method="save"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Button" to="." method="quit"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Button2" to="." method="quit"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Button3" to="." method="set_visible" binds= [false]]

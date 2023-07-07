@@ -1,0 +1,103 @@
+[gd_scene load_steps=2 format=3 uid="uid://q3xo7bu1q8f1"]
+
+[ext_resource type="Script" path="res://launcher_main.gd" id="1_dxe3b"]
+
+[node name="main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dxe3b")
+executable = "D:/Programs/Steam/steamapps/common/Godot Engine/projects/launchermaker2/settingcheck.exe"
+metadata/_edit_lock_ = true
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = 15.0
+offset_right = -15.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 10
+metadata/_edit_lock_ = true
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer2/VBoxContainer" groups=["keep"]]
+layout_mode = 2
+text = "LineEdit"
+placeholder_text = "StringSetting"
+
+[node name="SpinBox" type="SpinBox" parent="VBoxContainer2/VBoxContainer" groups=["keep"]]
+layout_mode = 2
+prefix = "SpinBox:"
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer2/VBoxContainer" groups=["keep"]]
+layout_mode = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="VBoxContainer2/VBoxContainer" groups=["keep"]]
+layout_mode = 2
+
+[node name="CheckBox" type="CheckBox" parent="VBoxContainer2/VBoxContainer" groups=["keep"]]
+layout_mode = 2
+text = "CheckBox
+"
+
+[node name="CheckButton" type="CheckButton" parent="VBoxContainer2/VBoxContainer" groups=["keep"]]
+layout_mode = 2
+text = "CheckButton
+"
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="VBoxContainer2/VBoxContainer" groups=["keep"]]
+layout_mode = 2
+text = "ColorPicker"
+
+[node name="OptionButton" type="OptionButton" parent="VBoxContainer2/VBoxContainer" groups=["keep"]]
+layout_mode = 2
+item_count = 3
+selected = 0
+popup/item_0/text = "Item 1"
+popup/item_0/id = 0
+popup/item_1/text = "Item 2"
+popup/item_1/id = 1
+popup/item_2/text = "Item 3"
+popup/item_2/id = 2
+
+[node name="TextEdit" type="TextEdit" parent="VBoxContainer2/VBoxContainer" groups=["keep"]]
+custom_minimum_size = Vector2(0, 128)
+layout_mode = 2
+placeholder_text = "Line 1
+Line 2
+Line 3"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 10
+metadata/_edit_lock_ = true
+
+[node name="CheckBox" type="CheckBox" parent="VBoxContainer2/HBoxContainer" groups=["autosave"]]
+layout_mode = 2
+tooltip_text = "Makes faster to close the app"
+text = "Auto-save"
+
+[node name="CheckBox2" type="CheckBox" parent="VBoxContainer2/HBoxContainer" groups=["autoproceed"]]
+layout_mode = 2
+tooltip_text = "Creates a countdown for a game launch on next startups."
+text = "Auto-proceed"
+
+[node name="Button" type="Button" parent="VBoxContainer2/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "launch"
+
+[connection signal="pressed" from="VBoxContainer2/HBoxContainer/Button" to="." method="save"]
+[connection signal="pressed" from="VBoxContainer2/HBoxContainer/Button" to="." method="quit"]
+[connection signal="pressed" from="VBoxContainer2/HBoxContainer/Button" to="." method="proceed"]
