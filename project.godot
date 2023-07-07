@@ -6,61 +6,24 @@
 ;   [section] ; section goes between []
 ;   param=value ; assign values to parameters
 
-config_version=4
-
-_global_script_classes=[ {
-"base": "CheckBox",
-"class": "LauncherCheckBox",
-"language": "GDScript",
-"path": "res://launcherCheckBox.gd"
-}, {
-"base": "Control",
-"class": "LauncherRoot",
-"language": "GDScript",
-"path": "res://laucherRoot.gd"
-}, {
-"base": "Button",
-"class": "launchButton",
-"language": "GDScript",
-"path": "res://launchButton.gd"
-}, {
-"base": "Button",
-"class": "saveButton",
-"language": "GDScript",
-"path": "res://saveButton.gd"
-} ]
-_global_script_class_icons={
-"LauncherCheckBox": "",
-"LauncherRoot": "",
-"launchButton": "",
-"saveButton": ""
-}
+config_version=5
 
 [application]
 
-config/name="launcher"
-run/main_scene="res://launchers/example.tscn"
+config/name="Launchermaker 2"
+run/main_scene="res://main.tscn"
+config/auto_accept_quit=false
+config/features=PackedStringArray("4.1", "GL Compatibility")
+run/low_processor_mode=true
 boot_splash/image="res://title.png"
 boot_splash/fullsize=false
-boot_splash/bg_color=Color( 0.12549, 0.145098, 0.192157, 1 )
 config/icon="res://icon.png"
 
 [autoload]
 
-ErrorManager="*res://errormanager.gd"
-QuitDialog="*res://QuitDialog.tscn"
-
-[display]
-
-window/size/resizable=false
-
-[physics]
-
-common/enable_pause_aware_picking=true
+Exit="*res://exit.tscn"
 
 [rendering]
 
-quality/driver/driver_name="GLES2"
-vram_compression/import_etc=true
-vram_compression/import_etc2=false
-environment/default_clear_color=Color( 0, 0.2, 0.4, 1 )
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
